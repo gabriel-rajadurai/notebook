@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
 import com.gabriel.notebook.common.ViewModelFactory
+import kotlinx.android.synthetic.main.notes_list_fragment.*
 
 class NotesListFragment : BaseFragment() {
 
@@ -23,6 +25,13 @@ class NotesListFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.notes_list_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fabAddNote.setOnClickListener {
+            findNavController().navigate(R.id.addNotesFragment)
+        }
     }
 
 }
