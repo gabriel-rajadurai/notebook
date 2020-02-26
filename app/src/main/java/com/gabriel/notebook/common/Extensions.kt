@@ -12,3 +12,23 @@ fun Fragment.setActionBarTitle(title: String) {
         }
     }
 }
+
+fun Fragment.showBackButton(){
+    requireActivity().let {
+        if (it is AppCompatActivity) {
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        } else {
+            it.actionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+}
+
+fun Fragment.hideBackButton(){
+    requireActivity().let {
+        if (it is AppCompatActivity) {
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        } else {
+            it.actionBar?.setDisplayHomeAsUpEnabled(false)
+        }
+    }
+}
