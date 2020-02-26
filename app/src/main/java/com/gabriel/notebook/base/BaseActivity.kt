@@ -10,8 +10,10 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return getCurrentFragment()?.let {
             // This will give the back navigation control to the current fragment
-            if (it.shouldGoBack())
+            if (it.shouldGoBack()) {
+                super.onBackPressed()
                 super.onSupportNavigateUp()
+            }
             else
                 false
         } ?: super.onSupportNavigateUp()

@@ -14,6 +14,12 @@ class MainActivity : BaseActivity() {
     }
 
     override fun getCurrentFragment(): BaseFragment? {
+        // Getting current fragment
+        val fragmentsInStack = supportFragmentManager
+            .findFragmentById(R.id.mainHost)?.childFragmentManager?.fragments
+        if (fragmentsInStack.isNullOrEmpty()) return null
+        val currentFragment = fragmentsInStack[0]
+        if (currentFragment is BaseFragment) return currentFragment
         return null
     }
 }
