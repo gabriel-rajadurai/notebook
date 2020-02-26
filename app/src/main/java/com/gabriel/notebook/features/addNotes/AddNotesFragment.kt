@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 
 import com.gabriel.notebook.R
 import com.gabriel.notebook.common.ViewModelFactory
+import com.gabriel.notebook.databinding.AddNotesFragmentBinding
 
 class AddNotesFragment : Fragment() {
 
+    private var binding: AddNotesFragmentBinding? = null
     private val addNotesViewModel: AddNotesViewModel by viewModels {
         ViewModelFactory {
             AddNotesViewModel(requireActivity().application)
@@ -22,6 +24,16 @@ class AddNotesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.add_notes_fragment, container, false)
+        binding = AddNotesFragmentBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding?.model = addNotesViewModel
     }
 }
