@@ -2,6 +2,8 @@ package com.gabriel.notebook.common
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun Fragment.setActionBarTitle(title: String) {
     requireActivity().let {
@@ -13,7 +15,7 @@ fun Fragment.setActionBarTitle(title: String) {
     }
 }
 
-fun Fragment.showBackButton(){
+fun Fragment.showBackButton() {
     requireActivity().let {
         if (it is AppCompatActivity) {
             it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -23,7 +25,7 @@ fun Fragment.showBackButton(){
     }
 }
 
-fun Fragment.hideBackButton(){
+fun Fragment.hideBackButton() {
     requireActivity().let {
         if (it is AppCompatActivity) {
             it.supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -31,4 +33,9 @@ fun Fragment.hideBackButton(){
             it.actionBar?.setDisplayHomeAsUpEnabled(false)
         }
     }
+}
+
+fun Date.toFormat(format: String): String {
+    val sdf = SimpleDateFormat(format, Locale.getDefault())
+    return sdf.format(this)
 }
