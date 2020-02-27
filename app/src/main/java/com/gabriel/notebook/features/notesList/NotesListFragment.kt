@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabriel.notebook.R
@@ -44,6 +45,9 @@ class NotesListFragment : BaseFragment() {
     private fun getAllNotes() {
         rvNotes.layoutManager = LinearLayoutManager(requireContext())
         rvNotes.adapter = notesAdapter
+        notesListViewModel.getAllNotes().observe(viewLifecycleOwner, Observer {
+            notesAdapter.submitList(it)
+        })
     }
 
 }
