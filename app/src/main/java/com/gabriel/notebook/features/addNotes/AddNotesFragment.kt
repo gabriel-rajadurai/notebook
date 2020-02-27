@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
@@ -14,6 +15,7 @@ import com.gabriel.notebook.common.setActionBarTitle
 import com.gabriel.notebook.common.showBackButton
 import com.gabriel.notebook.databinding.AddNotesFragmentBinding
 import kotlinx.android.synthetic.main.add_notes_fragment.*
+import kotlinx.coroutines.launch
 
 class AddNotesFragment : BaseFragment() {
 
@@ -43,10 +45,10 @@ class AddNotesFragment : BaseFragment() {
         setActionBarTitle(getString(R.string.title_add_note))
 
         btnSaveNote.setOnClickListener {
-            //TODO, Save Note in storage.
-            // Save the value in a sharedViewModel for faster access by viewNotes screen.
-            // Handle failure case
-            findNavController().navigate(R.id.viewNoteFragment)
+            lifecycleScope.launch {
+                addNotesViewModel.saveNote()
+                findNavController().navigate(R.id.viewNoteFragment)
+            }
         }
     }
 
