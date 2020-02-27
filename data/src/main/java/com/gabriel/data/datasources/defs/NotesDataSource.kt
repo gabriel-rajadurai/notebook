@@ -9,5 +9,5 @@ interface NotesDataSource {
 
     fun getAllNotes(): LiveData<List<Note>>
 
-    fun getNoteById(id: Int): Note?
+    suspend fun getNoteById(id: Int): Note?
 }
