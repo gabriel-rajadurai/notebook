@@ -9,4 +9,6 @@ class NotesLocalDataSource(private val notesDao: NotesDao) : NotesDataSource {
     override suspend fun saveNote(note: Note) {
         notesDao.saveNote(note)
     }
+
+    override fun getAllNotes() = notesDao.getAllNotes()
 }
