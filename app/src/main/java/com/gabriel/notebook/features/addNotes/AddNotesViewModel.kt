@@ -16,8 +16,8 @@ class AddNotesViewModel(app: Application) : AndroidViewModel(app) {
 
     private val notesRepository by lazy { NotesRepository(getApplication()) }
 
-    suspend fun saveNote() {
-        notesRepository.saveNote(
+    suspend fun saveNote(): Int {
+        return notesRepository.saveNote(
             Note(
                 title = title.value.toString(),
                 content = notes.value.toString(),

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
@@ -14,6 +15,7 @@ import com.gabriel.notebook.common.ViewModelFactory
 import com.gabriel.notebook.common.setActionBarTitle
 import com.gabriel.notebook.common.showBackButton
 import com.gabriel.notebook.databinding.AddNotesFragmentBinding
+import com.gabriel.notebook.features.viewNote.ViewNoteFragment
 import kotlinx.android.synthetic.main.add_notes_fragment.*
 import kotlinx.coroutines.launch
 
@@ -46,8 +48,12 @@ class AddNotesFragment : BaseFragment() {
 
         btnSaveNote.setOnClickListener {
             lifecycleScope.launch {
-                addNotesViewModel.saveNote()
-                findNavController().navigate(R.id.viewNoteFragment)
+                // Configure navigation such that, when going to viewNotesFragment,
+                // every fragment between notesListFragment and viewNotesFragment are removed from stack
+                val navOptions = NavOptions.Builder().setPopUpTo(R.id.notesListFragment, false).build()
+                findNavController().navigate(R.id.viewNoteFragment, Bundle().apply {
+                    putInt(ViewNoteFragment.BUN_NOTE_ID, addNotesViewModel.saveNote())
+                }, navOptions)
             }
         }
     }
