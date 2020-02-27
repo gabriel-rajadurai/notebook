@@ -12,9 +12,7 @@ class NotesRepository(context: Context) : NotesDataSource {
         NotesLocalDataSource(NotesDatabase.getDatabase(context).notesDao())
     }
 
-    override suspend fun saveNote(note: Note) {
-        notesDataSource.saveNote(note)
-    }
+    override suspend fun saveNote(note: Note) = notesDataSource.saveNote(note)
 
     override fun getAllNotes() = notesDataSource.getAllNotes()
 

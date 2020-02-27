@@ -6,9 +6,8 @@ import com.gabriel.data.models.Note
 
 class NotesLocalDataSource(private val notesDao: NotesDao) : NotesDataSource {
 
-    override suspend fun saveNote(note: Note) {
-        notesDao.saveNote(note)
-    }
+    override suspend fun saveNote(note: Note) = notesDao.saveNote(note).toInt()
+
 
     override fun getAllNotes() = notesDao.getAllNotes()
 

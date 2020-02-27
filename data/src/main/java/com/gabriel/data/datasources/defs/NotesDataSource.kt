@@ -5,7 +5,7 @@ import com.gabriel.data.models.Note
 
 interface NotesDataSource {
 
-    suspend fun saveNote(note: Note)
+    suspend fun saveNote(note: Note): Int
 
     fun getAllNotes(): LiveData<List<Note>>
 
