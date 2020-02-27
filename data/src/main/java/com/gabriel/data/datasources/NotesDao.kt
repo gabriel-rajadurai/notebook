@@ -15,4 +15,7 @@ interface NotesDao {
 
     @Query("Select * from notes_table ORDER BY createdAt DESC")
     fun getAllNotes(): LiveData<List<Note>>
+
+    @Query("Select * from notes_table WHERE id=:id")
+    fun getNoteById(id: Int): Note?
 }

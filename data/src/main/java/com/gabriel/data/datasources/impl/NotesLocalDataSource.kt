@@ -11,4 +11,6 @@ class NotesLocalDataSource(private val notesDao: NotesDao) : NotesDataSource {
     }
 
     override fun getAllNotes() = notesDao.getAllNotes()
+
+    override fun getNoteById(id: Int) = notesDao.getNoteById(id)
 }

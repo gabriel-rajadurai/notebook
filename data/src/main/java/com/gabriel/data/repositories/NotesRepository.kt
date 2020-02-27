@@ -17,4 +17,6 @@ class NotesRepository(context: Context) : NotesDataSource {
     }
 
     override fun getAllNotes() = notesDataSource.getAllNotes()
+
+    override fun getNoteById(id: Int) = notesDataSource.getNoteById(id)
 }
