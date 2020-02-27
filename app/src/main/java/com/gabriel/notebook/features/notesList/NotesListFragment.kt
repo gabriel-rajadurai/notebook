@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
 import com.gabriel.notebook.common.ViewModelFactory
@@ -21,6 +22,7 @@ class NotesListFragment : BaseFragment() {
             NotesListViewModel(requireActivity().application)
         }
     }
+    private val notesAdapter by lazy { NotesListAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +38,12 @@ class NotesListFragment : BaseFragment() {
         fabAddNote.setOnClickListener {
             findNavController().navigate(R.id.addNotesFragment)
         }
+        getAllNotes()
+    }
+
+    private fun getAllNotes() {
+        rvNotes.layoutManager = LinearLayoutManager(requireContext())
+        rvNotes.adapter = notesAdapter
     }
 
 }
