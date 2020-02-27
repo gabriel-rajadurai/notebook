@@ -10,5 +10,5 @@ abstract class BaseFragment : Fragment() {
      * It will be called when user presses the device back button or
      * if the user presses the action bar back button
      */
-    fun shouldGoBack() = true
+    open fun shouldGoBack() = true
 }

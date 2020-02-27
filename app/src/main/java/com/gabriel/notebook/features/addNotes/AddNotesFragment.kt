@@ -1,11 +1,14 @@
 package com.gabriel.notebook.features.addNotes
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
 import com.gabriel.notebook.common.ViewModelFactory
@@ -39,5 +42,28 @@ class AddNotesFragment : BaseFragment() {
         binding?.model = addNotesViewModel
         showBackButton()
         setActionBarTitle(getString(R.string.title_add_note))
+    }
+
+    override fun shouldGoBack(): Boolean {
+        if (addNotesViewModel.title.value?.isNotEmpty() == true
+            || addNotesViewModel.notes.value?.isNotEmpty() == true
+        ) {
+            AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.title_discard_note))
+                .setMessage(getString(R.string.msg_discard_note))
+                .setPositiveButton(
+                    getString(R.string.yes)
+                ) { dialog, _ ->
+                    dialog?.dismiss()
+                    findNavController().navigateUp()
+                }
+                .setNegativeButton(
+                    getString(R.string.no)
+                ) { dialog, _ -> dialog?.dismiss() }
+                .show()
+            return false
+        } else {
+            return true
+        }
     }
 }
