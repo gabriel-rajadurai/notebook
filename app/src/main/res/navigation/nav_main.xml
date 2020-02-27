@@ -15,4 +15,9 @@
         android:name="com.gabriel.notebook.features.addNotes.AddNotesFragment"
         android:label="AddNotesFragment"
         tools:layout="@layout/add_notes_fragment"/>
+    <fragment
+        android:id="@+id/viewNoteFragment"
+        android:name="com.gabriel.notebook.features.viewNote.ViewNoteFragment"
+        android:label="view_note_fragment"
+        tools:layout="@layout/view_note_fragment" />
 </navigation>

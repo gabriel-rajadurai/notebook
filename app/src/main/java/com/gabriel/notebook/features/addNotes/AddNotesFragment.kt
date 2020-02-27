@@ -1,12 +1,10 @@
 package com.gabriel.notebook.features.addNotes
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.gabriel.notebook.R
@@ -15,6 +13,7 @@ import com.gabriel.notebook.common.ViewModelFactory
 import com.gabriel.notebook.common.setActionBarTitle
 import com.gabriel.notebook.common.showBackButton
 import com.gabriel.notebook.databinding.AddNotesFragmentBinding
+import kotlinx.android.synthetic.main.add_notes_fragment.*
 
 class AddNotesFragment : BaseFragment() {
 
@@ -42,6 +41,13 @@ class AddNotesFragment : BaseFragment() {
         binding?.model = addNotesViewModel
         showBackButton()
         setActionBarTitle(getString(R.string.title_add_note))
+
+        btnSaveNote.setOnClickListener {
+            //TODO, Save Note in storage.
+            // Save the value in a sharedViewModel for faster access by viewNotes screen.
+            // Handle failure case
+            findNavController().navigate(R.id.viewNoteFragment)
+        }
     }
 
     override fun shouldGoBack(): Boolean {
