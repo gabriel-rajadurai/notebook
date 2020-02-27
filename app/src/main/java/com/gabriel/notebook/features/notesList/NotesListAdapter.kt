@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gabriel.data.models.Note
 import com.gabriel.notebook.databinding.ItemNoteBinding
 
-class NotesListAdapter : ListAdapter<Note, NotesListAdapter.NotesViewHolder>(DIFF_CALLBACK) {
+class NotesListAdapter(private val listener: NotesItemClickListener) :
+    ListAdapter<Note, NotesListAdapter.NotesViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         return NotesViewHolder(
@@ -27,13 +28,20 @@ class NotesListAdapter : ListAdapter<Note, NotesListAdapter.NotesViewHolder>(DIF
     }
 
 
-    class NotesViewHolder(private val binding: ItemNoteBinding) :
+    inner class NotesViewHolder(private val binding: ItemNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
             binding.note = note.apply {
                 //TODO convert createdAt to human readable format
             }
+            binding.root.setOnClickListener {
+                listener.onItemClicked(note)
+            }
         }
+    }
+
+    interface NotesItemClickListener {
+        fun onItemClicked(note: Note)
     }
 
     companion object {

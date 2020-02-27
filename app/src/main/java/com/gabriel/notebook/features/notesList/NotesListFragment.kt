@@ -8,14 +8,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gabriel.data.models.Note
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
 import com.gabriel.notebook.common.ViewModelFactory
 import com.gabriel.notebook.common.hideBackButton
 import com.gabriel.notebook.common.setActionBarTitle
+import com.gabriel.notebook.features.viewNote.ViewNoteFragment
 import kotlinx.android.synthetic.main.notes_list_fragment.*
 
-class NotesListFragment : BaseFragment() {
+class NotesListFragment : BaseFragment(), NotesListAdapter.NotesItemClickListener {
 
     // Lazily initializing NotesListViewModel using the viewModels() delegate
     private val notesListViewModel: NotesListViewModel by viewModels {
@@ -23,7 +25,7 @@ class NotesListFragment : BaseFragment() {
             NotesListViewModel(requireActivity().application)
         }
     }
-    private val notesAdapter by lazy { NotesListAdapter() }
+    private val notesAdapter by lazy { NotesListAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +49,12 @@ class NotesListFragment : BaseFragment() {
         rvNotes.adapter = notesAdapter
         notesListViewModel.getAllNotes().observe(viewLifecycleOwner, Observer {
             notesAdapter.submitList(it)
+        })
+    }
+
+    override fun onItemClicked(note: Note) {
+        findNavController().navigate(R.id.viewNoteFragment, Bundle().apply {
+            putInt(ViewNoteFragment.BUN_NOTE_ID, note.id)
         })
     }
 
