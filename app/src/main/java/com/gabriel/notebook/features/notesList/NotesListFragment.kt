@@ -48,9 +48,16 @@ class NotesListFragment : BaseFragment(), NotesListAdapter.NotesItemClickListene
 
     private fun getAllNotes() {
         rvNotes.layoutManager = LinearLayoutManager(requireContext())
-        rvNotes.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        rvNotes.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
         rvNotes.adapter = notesAdapter
         notesListViewModel.getAllNotes().observe(viewLifecycleOwner, Observer {
+            if (it.isNullOrEmpty()) tvNoNotes.visibility = View.VISIBLE
+            else tvNoNotes.visibility = View.GONE
             notesAdapter.submitList(it)
         })
     }
