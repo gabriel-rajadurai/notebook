@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabriel.data.models.Note
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
+import com.gabriel.notebook.common.SpacesItemDecoration
 import com.gabriel.notebook.common.ViewModelFactory
 import com.gabriel.notebook.common.hideBackButton
 import com.gabriel.notebook.common.setActionBarTitle
@@ -46,6 +47,7 @@ class NotesListFragment : BaseFragment(), NotesListAdapter.NotesItemClickListene
 
     private fun getAllNotes() {
         rvNotes.layoutManager = LinearLayoutManager(requireContext())
+        rvNotes.addItemDecoration(SpacesItemDecoration(16))
         rvNotes.adapter = notesAdapter
         notesListViewModel.getAllNotes().observe(viewLifecycleOwner, Observer {
             notesAdapter.submitList(it)
