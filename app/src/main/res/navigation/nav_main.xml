@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/notesListFragment">
+
+    <fragment
+        android:id="@+id/notesListFragment"
+        android:name="com.gabriel.notebook.features.notesList.NotesListFragment"
+        android:label="NotesListFragment"
+        tools:layout="@layout/notes_list_fragment"/>
+    <fragment
+        android:id="@+id/addNotesFragment"
+        android:name="com.gabriel.notebook.features.addNotes.AddNotesFragment"
+        android:label="AddNotesFragment"
+        tools:layout="@layout/add_notes_fragment"/>
+    <fragment
+        android:id="@+id/viewNoteFragment"
+        android:name="com.gabriel.notebook.features.viewNote.ViewNoteFragment"
+        android:label="view_note_fragment"
+        tools:layout="@layout/view_note_fragment" />
+</navigation>
