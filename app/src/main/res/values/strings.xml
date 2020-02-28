@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">Notebook</string>
-    <string name="hint_enter_title">Enter title</string>
-    <string name="hint_enter_notes">Enter notes</string>
+    <string name="hint_enter_title">Title</string>
+    <string name="hint_enter_notes">Note</string>
     <string name="btn_save_note">Save note</string>
     <string name="title_add_note">Add Note</string>
     <string name="title_discard_note">Discard note?</string>
     <string name="msg_discard_note">Are you sure you want to discard?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="error_enter_title">Enter Title</string>
+    <string name="error_enter_note">Enter Note</string>
+    <string name="error_failed_to_save_note">Failed to save Note</string>
 </resources>

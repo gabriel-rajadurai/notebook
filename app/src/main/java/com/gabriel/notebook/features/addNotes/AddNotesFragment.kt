@@ -14,8 +14,10 @@ import com.gabriel.notebook.base.BaseFragment
 import com.gabriel.notebook.common.ViewModelFactory
 import com.gabriel.notebook.common.setActionBarTitle
 import com.gabriel.notebook.common.showBackButton
+import com.gabriel.notebook.common.showSnackBar
 import com.gabriel.notebook.databinding.AddNotesFragmentBinding
 import com.gabriel.notebook.features.viewNote.ViewNoteFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.add_notes_fragment.*
 import kotlinx.coroutines.launch
 
@@ -43,16 +45,25 @@ class AddNotesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.model = addNotesViewModel
+        binding?.lifecycleOwner = viewLifecycleOwner
         showBackButton()
         setActionBarTitle(getString(R.string.title_add_note))
 
         btnSaveNote.setOnClickListener {
             lifecycleScope.launch {
+                val insertedNoteId = addNotesViewModel.saveNote()
+                if (insertedNoteId == -1) { // Insertion failed
+                    rootView.showSnackBar(getString(R.string.error_failed_to_save_note))
+                    return@launch
+                } else if (insertedNoteId == 0) { // Field validation failed
+                    return@launch
+                }
                 // Configure navigation such that, when going to viewNotesFragment,
                 // every fragment between notesListFragment and viewNotesFragment are removed from stack
-                val navOptions = NavOptions.Builder().setPopUpTo(R.id.notesListFragment, false).build()
+                val navOptions =
+                    NavOptions.Builder().setPopUpTo(R.id.notesListFragment, false).build()
                 findNavController().navigate(R.id.viewNoteFragment, Bundle().apply {
-                    putInt(ViewNoteFragment.BUN_NOTE_ID, addNotesViewModel.saveNote())
+                    putInt(ViewNoteFragment.BUN_NOTE_ID, insertedNoteId)
                 }, navOptions)
             }
         }
