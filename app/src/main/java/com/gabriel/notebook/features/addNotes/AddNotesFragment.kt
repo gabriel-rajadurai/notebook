@@ -11,10 +11,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
-import com.gabriel.notebook.common.ViewModelFactory
-import com.gabriel.notebook.common.setActionBarTitle
-import com.gabriel.notebook.common.showBackButton
-import com.gabriel.notebook.common.showSnackBar
+import com.gabriel.notebook.common.*
 import com.gabriel.notebook.databinding.AddNotesFragmentBinding
 import com.gabriel.notebook.features.viewNote.ViewNoteFragment
 import com.google.android.material.snackbar.Snackbar
@@ -50,6 +47,7 @@ class AddNotesFragment : BaseFragment() {
         setActionBarTitle(getString(R.string.title_add_note))
 
         btnSaveNote.setOnClickListener {
+            requireContext().hideKeyboard() // Hide keyboard to prevent it from coming in User's way
             lifecycleScope.launch {
                 val insertedNoteId = addNotesViewModel.saveNote()
                 if (insertedNoteId == -1) { // Insertion failed
