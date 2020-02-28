@@ -6,7 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gabriel.data.models.Note
+import com.gabriel.notebook.common.DATE_FORMAT
+import com.gabriel.notebook.common.MONTH_DATE_TIME_FORMAT
+import com.gabriel.notebook.common.toFormat
 import com.gabriel.notebook.databinding.ItemNoteBinding
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NotesListAdapter(private val listener: NotesItemClickListener) :
     ListAdapter<Note, NotesListAdapter.NotesViewHolder>(DIFF_CALLBACK) {
@@ -31,8 +37,17 @@ class NotesListAdapter(private val listener: NotesItemClickListener) :
     inner class NotesViewHolder(private val binding: ItemNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
+            fun String.toDate(inputFormat: String): Date? {
+                val sdf = SimpleDateFormat(inputFormat, Locale.getDefault())
+                return try {
+                    sdf.parse(this)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                    null
+                }
+            }
             binding.note = note.apply {
-                //TODO convert createdAt to human readable format
+                createdAt = createdAt.toDate(DATE_FORMAT)?.toFormat(MONTH_DATE_TIME_FORMAT) ?: "N.A"
             }
             binding.root.setOnClickListener {
                 listener.onItemClicked(note)

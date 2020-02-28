@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabriel.data.models.Note
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
+import com.gabriel.notebook.common.SpacesItemDecoration
 import com.gabriel.notebook.common.ViewModelFactory
 import com.gabriel.notebook.common.hideBackButton
 import com.gabriel.notebook.common.setActionBarTitle
@@ -46,8 +48,16 @@ class NotesListFragment : BaseFragment(), NotesListAdapter.NotesItemClickListene
 
     private fun getAllNotes() {
         rvNotes.layoutManager = LinearLayoutManager(requireContext())
+        rvNotes.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
         rvNotes.adapter = notesAdapter
         notesListViewModel.getAllNotes().observe(viewLifecycleOwner, Observer {
+            if (it.isNullOrEmpty()) tvNoNotes.visibility = View.VISIBLE
+            else tvNoNotes.visibility = View.GONE
             notesAdapter.submitList(it)
         })
     }

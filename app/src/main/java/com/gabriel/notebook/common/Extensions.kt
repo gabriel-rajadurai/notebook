@@ -1,7 +1,10 @@
 package com.gabriel.notebook.common
 
+import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -50,4 +53,19 @@ fun AndroidViewModel.getString(@StringRes resId: Int) =
 
 fun View.showSnackBar(msg: String) {
     Snackbar.make(this, msg, Snackbar.LENGTH_SHORT).show()
+}
+
+fun Context.hideKeyboard(){
+    val inputManager: InputMethodManager? = this
+        .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+    // check if no view has focus:
+    val v = when (this) {
+        is AppCompatActivity -> this.currentFocus
+        is Activity -> this.currentFocus
+        else -> {
+            return
+        }
+    }
+    inputManager?.hideSoftInputFromWindow(v?.windowToken, 0)
 }
