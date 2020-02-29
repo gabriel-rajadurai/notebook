@@ -14,4 +14,5 @@
     <string name="no_notes">No notes</string>
     <string name="delete">Delete</string>
     <string name="error_delete_note">Failed to delete Note</string>
+    <string name="edit">Edit</string>
 </resources>
