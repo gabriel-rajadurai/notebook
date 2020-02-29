@@ -1,9 +1,7 @@
 package com.gabriel.notebook.features.viewNote
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 
@@ -33,6 +31,7 @@ class ViewNoteFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         arguments?.getInt(BUN_NOTE_ID)?.let {
             lifecycleScope.launch {
                 viewNoteViewModel.getNoteById(it)?.let { note ->
@@ -42,6 +41,12 @@ class ViewNoteFragment : BaseFragment() {
             }
         } ?: throw IllegalStateException("Note ID cannot be null")
         showBackButton()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.menu_notes, menu)
     }
 
     companion object {
