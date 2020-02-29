@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.gabriel.data.models.Note
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
 import com.gabriel.notebook.common.*
@@ -29,6 +30,7 @@ class AddNotesFragment : BaseFragment() {
         }
     }
     private val noteId: Int? by lazy { arguments?.getInt(BUN_NOTE_ID) }
+    private var note: Note? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +55,9 @@ class AddNotesFragment : BaseFragment() {
             ACTION_UPDATE -> {
                 lifecycleScope.launch {
                     requireNotNull(noteId) { "Note Id cannot be null" }
-                    addNotesViewModel.getNoteById(noteId!!)?.let {
+                    setActionBarTitle(getString(R.string.update_note))
+                    note = addNotesViewModel.getNoteById(noteId!!)
+                    note?.let {
                         addNotesViewModel.title.value = it.title
                         addNotesViewModel.notes.value = it.content
                     }
@@ -88,7 +92,9 @@ class AddNotesFragment : BaseFragment() {
     }
 
     override fun shouldGoBack(): Boolean {
-        if (addNotesViewModel.title.value?.isNotEmpty() == true
+        if (note != null && note?.title == addNotesViewModel.title.value && note?.content == addNotesViewModel.notes.value) {
+            return true
+        } else if (addNotesViewModel.title.value?.isNotEmpty() == true
             || addNotesViewModel.notes.value?.isNotEmpty() == true
         ) {
             MaterialAlertDialogBuilder(requireContext())

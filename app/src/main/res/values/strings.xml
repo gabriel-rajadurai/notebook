@@ -16,4 +16,5 @@
     <string name="error_delete_note">Failed to delete Note</string>
     <string name="edit">Edit</string>
     <string name="note_saved">Note saved successfully</string>
+    <string name="update_note">Update Note</string>
 </resources>
