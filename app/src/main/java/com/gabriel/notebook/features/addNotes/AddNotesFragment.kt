@@ -74,6 +74,7 @@ class AddNotesFragment : BaseFragment() {
                 } else if (insertedNoteId == 0) { // Field validation failed
                     return@launch
                 }
+                rootView.showSnackBar(getString(R.string.note_saved))
                 // Configure navigation such that, when going to viewNotesFragment,
                 // every fragment between notesListFragment and viewNotesFragment are removed from stack
                 val navOptions =
