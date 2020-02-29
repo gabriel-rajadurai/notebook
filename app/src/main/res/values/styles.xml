@@ -10,6 +10,7 @@
         <item name="android:textColorPrimary">@color/colorOnPrimary</item>
         <item name="colorOnSurface">@color/colorOnPrimary</item>
 
+        <item name="materialAlertDialogTheme">@style/AppTheme.Alert</item>
         <item name="textInputStyle">@style/AppTheme.TextInputLayout</item>
         <item name="materialButtonStyle">@style/AppTheme.Button</item>
         <!--Text Styles-->
@@ -30,6 +31,10 @@
 
     <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:minWidth">150dp</item>
+    </style>
+
+    <style name="AppTheme.Alert" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">?colorOnPrimary</item>
     </style>
 
 </resources>

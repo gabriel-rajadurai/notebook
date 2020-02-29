@@ -15,6 +15,7 @@ import com.gabriel.notebook.common.*
 import com.gabriel.notebook.databinding.AddNotesFragmentBinding
 import com.gabriel.notebook.features.viewNote.ViewNoteFragment
 import com.gabriel.notebook.features.viewNote.ViewNoteFragment.Companion.BUN_NOTE_ID
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.add_notes_fragment.*
 import kotlinx.coroutines.launch
@@ -90,7 +91,7 @@ class AddNotesFragment : BaseFragment() {
         if (addNotesViewModel.title.value?.isNotEmpty() == true
             || addNotesViewModel.notes.value?.isNotEmpty() == true
         ) {
-            AlertDialog.Builder(requireContext())
+            MaterialAlertDialogBuilder(requireContext())
                 .setTitle(getString(R.string.title_discard_note))
                 .setMessage(getString(R.string.msg_discard_note))
                 .setPositiveButton(
