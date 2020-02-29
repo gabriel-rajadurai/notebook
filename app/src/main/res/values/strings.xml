@@ -4,7 +4,7 @@
     <string name="hint_enter_notes">Note</string>
     <string name="btn_save_note">Save note</string>
     <string name="title_add_note">Add Note</string>
-    <string name="title_discard_note">Discard note?</string>
+    <string name="title_discard_note">Discard?</string>
     <string name="msg_discard_note">Are you sure you want to discard?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -14,4 +14,6 @@
     <string name="no_notes">No notes</string>
     <string name="delete">Delete</string>
     <string name="error_delete_note">Failed to delete Note</string>
+    <string name="edit">Edit</string>
+    <string name="note_saved">Note saved successfully</string>
 </resources>

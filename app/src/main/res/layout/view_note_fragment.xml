@@ -7,11 +7,17 @@
     android:padding="24dp"
     tools:context=".features.viewNote.ViewNoteFragment">
 
-    <TextView
-        android:id="@+id/tvNote"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:textAppearance="?textAppearanceBody1" />
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/tvNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:textAppearance="?textAppearanceBody1" />
+    </ScrollView>
 
 </FrameLayout>
