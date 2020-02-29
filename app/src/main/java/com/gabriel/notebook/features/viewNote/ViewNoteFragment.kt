@@ -58,6 +58,7 @@ class ViewNoteFragment : BaseFragment() {
             lifecycleScope.launch {
                 val deleteCount = viewNoteViewModel.deleteNote(noteId)
                 if (deleteCount > 0) { // Delete successful
+                    rootView.showSnackBar("Deleted successfully")
                     findNavController().navigateUp()
                 } else {
                     rootView.showSnackBar(
