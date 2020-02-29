@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 
 import com.gabriel.notebook.R
@@ -12,6 +13,7 @@ import com.gabriel.notebook.common.ViewModelFactory
 import com.gabriel.notebook.common.setActionBarTitle
 import com.gabriel.notebook.common.showBackButton
 import com.gabriel.notebook.common.showSnackBar
+import com.gabriel.notebook.features.addNotes.AddNotesFragment
 import kotlinx.android.synthetic.main.view_note_fragment.*
 import kotlinx.coroutines.launch
 
@@ -66,6 +68,11 @@ class ViewNoteFragment : BaseFragment() {
                     )
                 }
             }
+        } else if (item.itemId == R.id.actionEdit) {
+            findNavController().navigate(R.id.addNotesFragment, Bundle().apply {
+                putString(AddNotesFragment.BUN_ACTION, AddNotesFragment.ACTION_UPDATE)
+                putInt(AddNotesFragment.BUN_NOTE_ID, noteId)
+            }, NavOptions.Builder().setPopUpTo(R.id.notesListFragment, false).build())
         }
         return super.onOptionsItemSelected(item)
     }

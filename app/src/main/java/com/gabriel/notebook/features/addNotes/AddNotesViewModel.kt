@@ -20,7 +20,7 @@ class AddNotesViewModel(app: Application) : AndroidViewModel(app) {
 
     private val notesRepository by lazy { NotesRepository(getApplication()) }
 
-    suspend fun saveNote(): Int {
+    suspend fun saveNote(noteId: Int): Int {
         titleError.value = null
         noteError.value = null
         var areFieldsValid = true
@@ -35,10 +35,13 @@ class AddNotesViewModel(app: Application) : AndroidViewModel(app) {
         if (!areFieldsValid) return 0
         return notesRepository.saveNote(
             Note(
+                id = noteId,
                 title = title.value.toString(),
                 content = notes.value.toString(),
                 createdAt = Date().toFormat(DATE_FORMAT)
             )
         )
     }
+
+    suspend fun getNoteById(noteId: Int) = notesRepository.getNoteById(noteId)
 }
