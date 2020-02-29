@@ -1,10 +1,7 @@
 package com.gabriel.data.datasources
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.gabriel.data.models.Note
 
 @Dao
@@ -18,4 +15,7 @@ interface NotesDao {
 
     @Query("Select * from notes_table WHERE id=:id")
     suspend fun getNoteById(id: Int): Note?
+
+    @Delete
+    suspend fun deleteNotes(vararg notes: Note): Int
 }

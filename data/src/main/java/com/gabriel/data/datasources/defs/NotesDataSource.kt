@@ -10,4 +10,6 @@ interface NotesDataSource {
     fun getAllNotes(): LiveData<List<Note>>
 
     suspend fun getNoteById(id: Int): Note?
+
+    suspend fun deleteNotes(vararg notes: Note): Int
 }
