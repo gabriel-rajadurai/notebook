@@ -17,4 +17,6 @@ class NotesRepository(context: Context) : NotesDataSource {
     override fun getAllNotes() = notesDataSource.getAllNotes()
 
     override suspend fun getNoteById(id: Int) = notesDataSource.getNoteById(id)
+
+    override suspend fun deleteNotes(vararg notes: Note) = notesDataSource.deleteNotes(*notes)
 }
