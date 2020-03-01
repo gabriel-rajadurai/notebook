@@ -69,6 +69,11 @@ class AddNotesFragment : BaseFragment() {
             }
         }
 
+        // Hiding keyboard on empty space
+        rootView.setOnClickListener {
+            requireContext().hideKeyboard()
+        }
+
         btnSaveNote.setOnClickListener {
             requireContext().hideKeyboard() // Hide keyboard to prevent it from coming in User's way
             lifecycleScope.launch {
