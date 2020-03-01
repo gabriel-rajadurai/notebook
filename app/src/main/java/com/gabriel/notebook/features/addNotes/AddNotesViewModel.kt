@@ -44,7 +44,9 @@ class AddNotesViewModel(app: Application) : AndroidViewModel(app) {
     suspend fun saveNote(noteId: Int): Int {
         titleError.value = null
         noteError.value = null
-        val areFieldsValid = validateTitle() && validateNote()
+        val isTitleValid = validateTitle()
+        val isNotesValid = validateNote()
+        val areFieldsValid = isTitleValid && isNotesValid
         if (!areFieldsValid) return 0
 
         return notesRepository.saveNote(
@@ -60,20 +62,20 @@ class AddNotesViewModel(app: Application) : AndroidViewModel(app) {
     private fun validateTitle(title: String? = this.title.value): Boolean {
         return if (title.isNullOrBlank()) {
             titleError.value = getString(R.string.error_enter_title)
-            true
+            false
         } else {
             titleError.value = null
-            false
+            true
         }
     }
 
     private fun validateNote(note: String? = this.notes.value): Boolean {
         return if (note.isNullOrBlank()) {
             noteError.value = getString(R.string.error_enter_note)
-            true
+            false
         } else {
             noteError.value = null
-            false
+            true
         }
     }
 
