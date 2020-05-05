@@ -1,6 +1,8 @@
 package com.gabriel.notebook.features.addNotes
 
 import android.app.Application
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.gabriel.data.models.Note
@@ -18,21 +20,35 @@ class AddNotesViewModel(app: Application) : AndroidViewModel(app) {
     val titleError = MutableLiveData<String>()
     val noteError = MutableLiveData<String>()
 
+    val noteValidator = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+            validateNote(text.toString())
+        }
+    }
+    val titleValidator = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+            validateTitle(text.toString())
+        }
+    }
+
     private val notesRepository by lazy { NotesRepository(getApplication()) }
 
     suspend fun saveNote(noteId: Int): Int {
         titleError.value = null
         noteError.value = null
-        var areFieldsValid = true
-        if (title.value.isNullOrBlank()) {
-            titleError.value = getString(R.string.error_enter_title)
-            areFieldsValid = false
-        }
-        if (notes.value.isNullOrBlank()) {
-            noteError.value = getString(R.string.error_enter_note)
-            areFieldsValid = false
-        }
+        val isTitleValid = validateTitle()
+        val isNotesValid = validateNote()
+        val areFieldsValid = isTitleValid && isNotesValid
         if (!areFieldsValid) return 0
+
         return notesRepository.saveNote(
             Note(
                 id = noteId,
@@ -41,6 +57,26 @@ class AddNotesViewModel(app: Application) : AndroidViewModel(app) {
                 createdAt = Date().toFormat(DATE_FORMAT)
             )
         )
+    }
+
+    private fun validateTitle(title: String? = this.title.value): Boolean {
+        return if (title.isNullOrBlank()) {
+            titleError.value = getString(R.string.error_enter_title)
+            false
+        } else {
+            titleError.value = null
+            true
+        }
+    }
+
+    private fun validateNote(note: String? = this.notes.value): Boolean {
+        return if (note.isNullOrBlank()) {
+            noteError.value = getString(R.string.error_enter_note)
+            false
+        } else {
+            noteError.value = null
+            true
+        }
     }
 
     suspend fun getNoteById(noteId: Int) = notesRepository.getNoteById(noteId)
