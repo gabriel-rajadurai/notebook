@@ -1,16 +1,11 @@
 package com.gabriel.data.repositories
 
-import android.content.Context
-import com.gabriel.data.datasources.NotesDatabase
 import com.gabriel.data.datasources.defs.NotesDataSource
-import com.gabriel.data.datasources.impl.NotesLocalDataSource
 import com.gabriel.data.models.Note
+import javax.inject.Inject
 
-class NotesRepository(context: Context) : NotesDataSource {
-
-    private val notesDataSource by lazy {
-        NotesLocalDataSource(NotesDatabase.getDatabase(context).notesDao())
-    }
+class NotesRepository @Inject constructor(private val notesDataSource: NotesDataSource) :
+    NotesDataSource {
 
     override suspend fun saveNote(note: Note) = notesDataSource.saveNote(note)
 

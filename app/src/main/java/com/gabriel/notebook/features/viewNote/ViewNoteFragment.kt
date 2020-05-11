@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.gabriel.notebook.NotesApplication
 
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
@@ -16,18 +17,20 @@ import com.gabriel.notebook.common.showSnackBar
 import com.gabriel.notebook.features.addNotes.AddNotesFragment
 import kotlinx.android.synthetic.main.view_note_fragment.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class ViewNoteFragment : BaseFragment() {
 
-    //Lazily initialize the viewModel using the viewModels() delegate
-    private val viewNoteViewModel: ViewNoteViewModel by viewModels {
-        ViewModelFactory {
-            ViewNoteViewModel(requireActivity().application)
-        }
-    }
+    @Inject
+    lateinit var viewNoteViewModel: ViewNoteViewModel
 
     private val noteId by lazy {
         arguments?.getInt(BUN_NOTE_ID) ?: throw IllegalStateException("Note ID cannot be null")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (requireContext().applicationContext as NotesApplication).appGraph.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(

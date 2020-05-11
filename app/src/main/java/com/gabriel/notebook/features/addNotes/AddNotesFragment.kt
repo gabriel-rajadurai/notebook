@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.gabriel.data.models.Note
+import com.gabriel.notebook.NotesApplication
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
 import com.gabriel.notebook.common.*
@@ -20,17 +21,20 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.add_notes_fragment.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class AddNotesFragment : BaseFragment() {
 
     private var binding: AddNotesFragmentBinding? = null
-    private val addNotesViewModel: AddNotesViewModel by viewModels {
-        ViewModelFactory {
-            AddNotesViewModel(requireActivity().application)
-        }
-    }
+    @Inject
+    lateinit var addNotesViewModel: AddNotesViewModel
     private val noteId: Int? by lazy { arguments?.getInt(BUN_NOTE_ID) }
     private var note: Note? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (requireContext().applicationContext as NotesApplication).appGraph.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
