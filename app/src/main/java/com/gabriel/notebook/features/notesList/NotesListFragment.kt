@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabriel.data.models.Note
+import com.gabriel.notebook.NotesApplication
 import com.gabriel.notebook.R
 import com.gabriel.notebook.base.BaseFragment
 import com.gabriel.notebook.common.SpacesItemDecoration
@@ -18,16 +19,19 @@ import com.gabriel.notebook.common.hideBackButton
 import com.gabriel.notebook.common.setActionBarTitle
 import com.gabriel.notebook.features.viewNote.ViewNoteFragment
 import kotlinx.android.synthetic.main.notes_list_fragment.*
+import javax.inject.Inject
 
 class NotesListFragment : BaseFragment(), NotesListAdapter.NotesItemClickListener {
 
-    // Lazily initializing NotesListViewModel using the viewModels() delegate
-    private val notesListViewModel: NotesListViewModel by viewModels {
-        ViewModelFactory {
-            NotesListViewModel(requireActivity().application)
-        }
-    }
+    @Inject
+    lateinit var notesListViewModel: NotesListViewModel
+
     private val notesAdapter by lazy { NotesListAdapter(this) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (requireContext().applicationContext as NotesApplication).appGraph.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -12,8 +12,9 @@ import com.gabriel.notebook.common.DATE_FORMAT
 import com.gabriel.notebook.common.getString
 import com.gabriel.notebook.common.toFormat
 import java.util.*
+import javax.inject.Inject
 
-class AddNotesViewModel(app: Application) : AndroidViewModel(app) {
+class AddNotesViewModel @Inject constructor(app: Application) : AndroidViewModel(app) {
 
     val title = MutableLiveData<String>()
     val notes = MutableLiveData<String>()
@@ -39,7 +40,8 @@ class AddNotesViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    private val notesRepository by lazy { NotesRepository(getApplication()) }
+    @Inject
+    lateinit var notesRepository: NotesRepository
 
     suspend fun saveNote(noteId: Int): Int {
         titleError.value = null
