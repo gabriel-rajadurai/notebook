@@ -1,5 +1,6 @@
 package com.gabriel.notebook.features.addNotes
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -69,6 +70,11 @@ class AddNotesFragment : BaseFragment() {
             }
             ACTION_NEW -> {
             }
+            Intent.EXTRA_PROCESS_TEXT -> {
+                arguments?.getString(NOTE_PROCESS_TEXT)?.let {
+                    addNotesViewModel.notes.value = it
+                }
+            }
             else -> {
             }
         }
@@ -130,5 +136,6 @@ class AddNotesFragment : BaseFragment() {
         const val BUN_ACTION = "bunAction"
         const val ACTION_UPDATE = "actionUpdate"
         const val ACTION_NEW = "actionNew"
+        const val NOTE_PROCESS_TEXT = "noteProcessText"
     }
 }
